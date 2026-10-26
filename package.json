@@ -1,0 +1,445 @@
+{
+  "name": "clickup-tasks",
+  "displayName": "ClickUp Tasks",
+  "description": "Importa tarefas do ClickUp (dados, comentários e anexos) para uma pasta local em Markdown, prontas para referenciar em qualquer IA.",
+  "version": "0.6.0",
+  "publisher": "renan-dev",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renanvnunes/clickup-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/renanvnunes/clickup-vscode/issues"
+  },
+  "homepage": "https://github.com/renanvnunes/clickup-vscode#readme",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "clickupTasks.importTask",
+        "title": "Nova tarefa",
+        "category": "ClickUp",
+        "icon": "$(add)"
+      },
+      {
+        "command": "clickupTasks.reimportTask",
+        "title": "Atualizar tarefa do ClickUp",
+        "category": "ClickUp",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "clickupTasks.openTaskFolder",
+        "title": "Abrir pasta da tarefa",
+        "category": "ClickUp",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "clickupTasks.openInBrowser",
+        "title": "Abrir no ClickUp",
+        "category": "ClickUp",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "clickupTasks.refreshView",
+        "title": "Recarregar lista",
+        "category": "ClickUp",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "clickupTasks.setToken",
+        "title": "Token da API",
+        "category": "ClickUp",
+        "icon": "$(key)"
+      },
+      {
+        "command": "clickupTasks.replaceToken",
+        "title": "Trocar token da API",
+        "category": "ClickUp"
+      },
+      {
+        "command": "clickupTasks.removeToken",
+        "title": "Remover token da API",
+        "category": "ClickUp",
+        "enablement": "clickupTasks.hasToken"
+      },
+      {
+        "command": "clickupTasks.removeTask",
+        "title": "Remover tarefa local (desvincular)",
+        "category": "ClickUp",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "clickupTasks.openComments",
+        "title": "Ver comentários",
+        "category": "ClickUp",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "clickupTasks.changeStatus",
+        "title": "Alterar status",
+        "category": "ClickUp",
+        "icon": "$(arrow-swap)"
+      },
+      {
+        "command": "clickupTasks.groupByStatus",
+        "title": "Agrupar por status",
+        "category": "ClickUp",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "clickupTasks.ungroupByStatus",
+        "title": "Desagrupar (lista simples)",
+        "category": "ClickUp",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "clickupTasks.searchTasks",
+        "title": "Pesquisar tarefas",
+        "category": "ClickUp",
+        "icon": "$(search)"
+      },
+      {
+        "command": "clickupTasks.filterByStatus",
+        "title": "Filtrar por status",
+        "category": "ClickUp",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "clickupTasks.clearFilters",
+        "title": "Limpar filtros",
+        "category": "ClickUp",
+        "icon": "$(clear-all)",
+        "enablement": "clickupTasks.filtered"
+      },
+      {
+        "command": "clickupTasks.startTimer",
+        "title": "Iniciar timer",
+        "category": "ClickUp",
+        "icon": "$(play)"
+      },
+      {
+        "command": "clickupTasks.stopTimer",
+        "title": "Parar timer",
+        "category": "ClickUp",
+        "icon": "$(debug-stop)",
+        "enablement": "clickupTasks.timerRunning"
+      },
+      {
+        "command": "clickupTasks.openDescription",
+        "title": "Abrir tarefa",
+        "category": "ClickUp",
+        "icon": "$(book)"
+      },
+      {
+        "command": "clickupTasks.downloadImages",
+        "title": "Baixar imagens",
+        "category": "ClickUp",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "clickupTasks.clearImages",
+        "title": "Limpar imagens",
+        "category": "ClickUp",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "clickupTasks.openTaskFile",
+        "title": "Abrir task.md",
+        "category": "ClickUp",
+        "icon": "$(markdown)"
+      },
+      {
+        "command": "clickupTasks.copyImagePath",
+        "title": "Copiar caminho da imagem",
+        "category": "ClickUp",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "clickupTasks.openImageTab",
+        "title": "Abrir em aba do VS Code",
+        "category": "ClickUp",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "clickupTasks.copyImageLink",
+        "title": "Copiar link da imagem",
+        "category": "ClickUp",
+        "icon": "$(link)"
+      },
+      {
+        "command": "clickupTasks.openImageBrowser",
+        "title": "Abrir no navegador",
+        "category": "ClickUp",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "clickupTasks.openNotes",
+        "title": "Ver notas locais",
+        "category": "ClickUp",
+        "icon": "$(lock)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "clickupTasks",
+          "title": "ClickUp Tasks",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "clickupTasks": [
+        {
+          "id": "clickupTasks.tasks",
+          "name": "Minhas tarefas"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "clickupTasks.tasks",
+        "when": "!clickupTasks.hasToken",
+        "contents": "$(warning) Token da API do ClickUp não definido.\nGere em ClickUp → Settings → Apps → API Token.\n[Definir token](command:clickupTasks.replaceToken)"
+      },
+      {
+        "view": "clickupTasks.tasks",
+        "when": "clickupTasks.hasToken && !clickupTasks.filtered",
+        "contents": "Nenhuma tarefa ainda. Adicione o ID de uma tarefa do ClickUp para começar a trabalhar.\n[Nova tarefa](command:clickupTasks.importTask)\n$(pass) Token definido · [Trocar](command:clickupTasks.replaceToken) · [Remover](command:clickupTasks.removeToken)"
+      },
+      {
+        "view": "clickupTasks.tasks",
+        "when": "clickupTasks.hasToken && clickupTasks.filtered",
+        "contents": "Nenhuma tarefa com esses filtros.\n[Limpar filtros](command:clickupTasks.clearFilters)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "clickupTasks.importTask",
+          "when": "view == clickupTasks.tasks",
+          "group": "navigation@1"
+        },
+        {
+          "command": "clickupTasks.refreshView",
+          "when": "view == clickupTasks.tasks",
+          "group": "1_view@2"
+        },
+        {
+          "command": "clickupTasks.ungroupByStatus",
+          "when": "view == clickupTasks.tasks && config.clickupTasks.groupByStatus",
+          "group": "1_view@1"
+        },
+        {
+          "command": "clickupTasks.groupByStatus",
+          "when": "view == clickupTasks.tasks && !config.clickupTasks.groupByStatus",
+          "group": "1_view@1"
+        },
+        {
+          "command": "clickupTasks.setToken",
+          "when": "view == clickupTasks.tasks",
+          "group": "2_account@1"
+        },
+        {
+          "command": "clickupTasks.searchTasks",
+          "when": "view == clickupTasks.tasks",
+          "group": "navigation@2"
+        },
+        {
+          "command": "clickupTasks.filterByStatus",
+          "when": "view == clickupTasks.tasks",
+          "group": "navigation@3"
+        },
+        {
+          "command": "clickupTasks.clearFilters",
+          "when": "view == clickupTasks.tasks && clickupTasks.filtered",
+          "group": "navigation@4"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "clickupTasks.startTimer",
+          "when": "view == clickupTasks.tasks && viewItem == clickupTasks.task",
+          "group": "inline@0"
+        },
+        {
+          "command": "clickupTasks.stopTimer",
+          "when": "view == clickupTasks.tasks && viewItem == clickupTasks.task.running",
+          "group": "inline@0"
+        },
+        {
+          "command": "clickupTasks.openComments",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "inline@1"
+        },
+        {
+          "command": "clickupTasks.changeStatus",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "inline@2"
+        },
+        {
+          "command": "clickupTasks.reimportTask",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "3_task@1"
+        },
+        {
+          "command": "clickupTasks.openTaskFolder",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "3_task@2"
+        },
+        {
+          "command": "clickupTasks.openInBrowser",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "3_task@3"
+        },
+        {
+          "command": "clickupTasks.removeTask",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "4_remove@1"
+        },
+        {
+          "command": "clickupTasks.openComments",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "1_view@1"
+        },
+        {
+          "command": "clickupTasks.changeStatus",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "1_view@0"
+        },
+        {
+          "command": "clickupTasks.startTimer",
+          "when": "view == clickupTasks.tasks && viewItem == clickupTasks.task",
+          "group": "0_timer@1"
+        },
+        {
+          "command": "clickupTasks.stopTimer",
+          "when": "view == clickupTasks.tasks && viewItem == clickupTasks.task.running",
+          "group": "0_timer@1"
+        },
+        {
+          "command": "clickupTasks.openDescription",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "1_view@0"
+        },
+        {
+          "command": "clickupTasks.downloadImages",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "2_images@1"
+        },
+        {
+          "command": "clickupTasks.clearImages",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "2_images@2"
+        },
+        {
+          "command": "clickupTasks.openTaskFile",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "1_view@3"
+        },
+        {
+          "command": "clickupTasks.openNotes",
+          "when": "view == clickupTasks.tasks && viewItem =~ /^clickupTasks\\.task/",
+          "group": "1_view@2"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "clickupTasks.copyImagePath",
+          "when": "webviewId == 'clickupTasks.comments' && clickupImageLocal",
+          "group": "1_local@1"
+        },
+        {
+          "command": "clickupTasks.openImageTab",
+          "when": "webviewId == 'clickupTasks.comments' && clickupImageLocal",
+          "group": "1_local@2"
+        },
+        {
+          "command": "clickupTasks.copyImageLink",
+          "when": "webviewId == 'clickupTasks.comments' && clickupImage",
+          "group": "2_link@1"
+        },
+        {
+          "command": "clickupTasks.openImageBrowser",
+          "when": "webviewId == 'clickupTasks.comments' && clickupImage",
+          "group": "2_link@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "clickupTasks.copyImagePath",
+          "when": "false"
+        },
+        {
+          "command": "clickupTasks.openImageTab",
+          "when": "false"
+        },
+        {
+          "command": "clickupTasks.copyImageLink",
+          "when": "false"
+        },
+        {
+          "command": "clickupTasks.openImageBrowser",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ClickUp Tasks",
+      "properties": {
+        "clickupTasks.tasksFolder": {
+          "type": "string",
+          "default": ".clickup/tasks",
+          "markdownDescription": "Pasta onde as tarefas são salvas. Caminho relativo à primeira pasta do workspace, absoluto ou iniciado com `~`."
+        },
+        "clickupTasks.teamId": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "ID do workspace (team) do ClickUp, necessário para IDs customizados como `ID-49228`. Se vazio, é detectado automaticamente."
+        },
+        "clickupTasks.numericIdPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "ID"
+          ],
+          "markdownDescription": "Prefixos de ID customizado tentados, em ordem, quando você digita só o número da tarefa. Ex.: com `[\"ID\", \"DEV\"]`, `1234` → `ID-1234`, depois `DEV-1234` e por fim `1234` como ID nativo."
+        },
+        "clickupTasks.groupByStatus": {
+          "type": "boolean",
+          "default": true,
+          "description": "Agrupar a lista de tarefas por status, na ordem do ClickUp. Concluídas/fechadas ficam por último, recolhidas."
+        },
+        "clickupTasks.imageRetentionHours": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "markdownDescription": "Imagens baixadas com **Baixar imagens** são apagadas sozinhas depois deste número de horas, em todas as tarefas (verificado a cada 15 min). Vídeos e outros arquivos nunca são baixados."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run check-types && node esbuild.js --production",
+    "compile": "npm run check-types && node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "check-types": "tsc --noEmit",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/vsce": "^3.2.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0"
+  }
+}
