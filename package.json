@@ -4,7 +4,12 @@
   "description": "Importa tarefas do ClickUp (dados, comentários e anexos) para uma pasta local em Markdown, prontas para referenciar em qualquer IA.",
   "version": "0.6.0",
   "publisher": "renan-dev",
-  "license": "UNLICENSED",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#7B68EE",
+    "theme": "dark"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/renanvnunes/clickup-vscode.git"
@@ -17,7 +22,19 @@
     "vscode": "^1.90.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "AI"
+  ],
+  "keywords": [
+    "clickup",
+    "tasks",
+    "tarefas",
+    "markdown",
+    "ai",
+    "ia",
+    "copilot",
+    "claude",
+    "time tracking"
   ],
   "main": "./dist/extension.js",
   "contributes": {
