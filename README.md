@@ -1,60 +1,159 @@
 # ClickUp Tasks
 
-Importa uma tarefa do ClickUp (dados, campos personalizados, checklists, subtarefas, comentários e links dos anexos) para uma pasta local, em Markdown. Para trabalhar com IA, é só referenciar o `task.md` no chat do Copilot, Claude Code, Codex ou qualquer outra.
+**Traga suas tarefas do ClickUp para dentro do VS Code e entregue o contexto completo para a sua IA.**
 
-## Uso
+A extensão importa uma tarefa do ClickUp (descrição, campos personalizados, checklists, subtarefas, comentários e anexos) para um `task.md` local. Basta referenciar esse arquivo no Copilot, Claude Code, Codex, Cursor ou qualquer outro assistente, e a IA passa a trabalhar com a tarefa inteira, sem copiar e colar.
 
-1. `Ctrl+Shift+P` → **ClickUp: Token da API** e cole o seu token pessoal (ClickUp → Settings → Apps → API Token, começa com `pk_`). Ele é validado na hora e fica guardado no keychain do sistema. Rodando o mesmo comando de novo, você vê a conta conectada e pode trocar ou remover o token.
-2. Clique no ícone **ClickUp Tasks** na Activity Bar e no botão **+** (ou `Ctrl+Shift+P` → **ClickUp: Nova tarefa**). Aceita:
-   - ID customizado: `ID-49228` (maiúsculas ou minúsculas, com hífen ou espaço)
-   - Só o número: `49228` → tenta `ID-49228` e depois como ID nativo (prefixos em `clickupTasks.numericIdPrefixes`)
-   - Hash (ID nativo): `17twvjwwqeu` ou `#17twvjwwqeu`
-   - Link: `https://app.clickup.com/t/...`
-3. **Clicar numa tarefa** da lista abre o painel da tarefa: um cabeçalho no estilo do ClickUp (status, prioridade, tags, responsáveis, criador, tempo rastreado × estimativa, início, prazo — destacado se atrasado —, criação/atualização/conclusão, pontos, observadores, lista) e as abas **Descrição** (texto, campos personalizados, checklists, subtarefas e galeria de anexos), **Comentários** (do ClickUp) e **🔒 Notas locais**. O `task.md` continua sendo gerado para referenciar em IAs (botão **task.md** no painel ou botão direito → **Abrir task.md**). Ao importar uma tarefa nova, o painel abre automaticamente. O botão 💬 da tarefa abre os **comentários** numa tela própria: cards por autor, agrupados por dia, respostas em thread, imagens, busca, ordem invertível e botão para atualizar do ClickUp. No rodapé dessa tela dá para **comentar** e **responder** comentários direto no ClickUp, com `**negrito**`, `_itálico_`, `` `código` ``, links e `@menção` com autocompletar — atalhos `Ctrl+B`, `Ctrl+I`, `Ctrl+E` e `Ctrl+K` (ou os botões **B** *I* `</>` 🔗) aplicam/removem o formato no texto selecionado. Se o ClickUp recusar a formatação, o comentário é reenviado como texto puro. A aba **🔒 Notas locais** (separada dos comentários) guarda anotações que **não vão para o ClickUp**: o editor dessa aba cria notas em vez de comentar; elas aparecem com borda tracejada, têm data (escolhida ou a atual), podem ser editadas e excluídas, ficam em `notes.json` e numa seção **Notas locais** do `task.md` (para a IA também ver). Elas sobrevivem à atualização da tarefa. A lista lateral agrupa as tarefas por **status**, na ordem e com as cores do ClickUp (concluídas por último, recolhidas; o menu **…** do painel alterna para lista simples e tem recarregar e token). No topo do painel ficam **+ nova tarefa**, **🔍 pesquisar** (filtra enquanto digita, por termos do título ou pelo ID: `49228` ou `ID-49228`, sem diferenciar acentos) e **filtrar por status** (só os status que existem nas suas tarefas, com contagem, múltipla escolha). Os filtros ficam salvos por workspace e o botão de limpar aparece quando há filtro ativo. Cada tarefa tem botão **▶ iniciar timer** do ClickUp (vira **■ parar** na tarefa que está contando, marcada com ● vermelho e ⏱). Como o ClickUp só permite um timer por pessoa, iniciar numa tarefa para o que estiver rodando em outra, inclusive um timer iniciado no ClickUp web. O tempo corre na barra de status (clique para parar) e a extensão sincroniza com o ClickUp a cada minuto e ao focar a janela. Ao passar o mouse, cada tarefa mostra ▶/■ timer, comentários e **alterar status** (mostra os status da lista da tarefa no ClickUp). O botão direito tem também **baixar/limpar imagens**, atualizar do ClickUp, abrir a pasta, abrir no ClickUp e **remover tarefa local**, que manda a pasta para a lixeira sem alterar nada no ClickUp.
+Além disso, você acompanha, comenta, muda o status e marca o tempo das tarefas sem sair do editor.
 
-## Estrutura gerada
+![Painel da tarefa com a lista lateral e o timer rodando](images/painel.png)
 
-```
-.clickup/tasks/
-├── .gitignore            # "*": se a pasta ficar dentro de um projeto, não entra no git
-└── ID-49228/
-    ├── task.md           # tarefa legível; imagens e anexos como link do ClickUp
-    ├── task.json         # resposta bruta da API
-    ├── comments.json
-    ├── notes.json        # notas locais (só existe se você criar alguma)
-    └── images/           # só se você usar "Baixar imagens"; apagada sozinha em 3 h
-```
+---
+
+## ✨ Recursos
+
+- 📥 **Importa pelo ID, pelo número ou pelo link**: `ID-49228`, `49228`, `#17twvjwwqeu` ou `https://app.clickup.com/t/...`.
+- 🤖 **Markdown pronto para IA**: um `task.md` limpo por tarefa, com tudo o que importa.
+- 🗂️ **Lista lateral por status**: na ordem e nas cores do ClickUp, com pesquisa e filtro.
+- 📋 **Painel da tarefa**: status, prioridade, responsáveis, prazos, tempo rastreado, checklists, subtarefas e anexos.
+- 💬 **Comentários completos**: leia, responda e comente no ClickUp com formatação e `@menção`.
+- 🔒 **Notas locais**: anotações que **não vão para o ClickUp**, mas que a IA enxerga.
+- ⏱️ **Timer integrado**: inicie e pare o timer do ClickUp; o tempo aparece na barra de status.
+- 🔄 **Alterar status** direto da lista, com os status da lista da tarefa no ClickUp.
+- 🖼️ **Imagens sob demanda**: baixe as imagens quando precisar; elas se apagam sozinhas depois.
+
+---
+
+## 🚀 Começando
+
+1. **Conecte sua conta.** `Ctrl+Shift+P` → **ClickUp: Token da API** e cole o seu token pessoal.
+   No ClickUp: avatar → **Settings** → **Apps** → **API Token** (começa com `pk_`).
+2. **Importe uma tarefa.** Clique no ícone **ClickUp Tasks** na Activity Bar e no botão **+**.
+3. **Use com a IA.** Abra a tarefa e referencie o `task.md` no chat, por exemplo:
+
+   > Implemente o que está descrito em `@.clickup/tasks/ID-49228/task.md`
+
+Pronto. Para trazer mudanças feitas no ClickUp, use **Atualizar tarefa do ClickUp** (ícone 🔄).
+
+---
+
+## 📖 Como funciona
+
+### Importar tarefas
+
+O botão **+** (ou **ClickUp: Nova tarefa**) aceita:
+
+| Você digita | O que acontece |
+| --- | --- |
+| `ID-49228`, `id 49228` | ID customizado (maiúsculas ou minúsculas, com hífen ou espaço) |
+| `49228` | Tenta `ID-49228`, depois os outros prefixos configurados e, por fim, como ID nativo |
+| `17twvjwwqeu` ou `#17twvjwwqeu` | ID nativo do ClickUp |
+| `https://app.clickup.com/t/...` | Link da tarefa |
+
+Ao importar, o painel da tarefa abre automaticamente.
+
+![Campo de nova tarefa recebendo um link do ClickUp](images/importar.png)
+
+### Lista lateral
+
+![Lista lateral agrupada por status, com o seletor de alterar status aberto](images/status.png)
+
+- Agrupada por **status**, na ordem e com as cores do ClickUp; concluídas ficam por último, recolhidas.
+- **🔍 Pesquisar** filtra enquanto você digita, pelo título ou pelo ID, sem diferenciar acentos.
+- **Filtrar por status** mostra só os status que existem nas suas tarefas, com contagem e múltipla escolha.
+- Filtros ficam salvos por workspace. O menu **…** alterna entre lista agrupada e lista simples.
+- Ao passar o mouse: ▶ timer, 💬 comentários e ⇄ alterar status. O botão direito tem o resto (atualizar, abrir pasta, abrir no ClickUp, imagens e remover).
+
+### Painel da tarefa
+
+Clicar numa tarefa abre um painel no estilo do ClickUp, com cabeçalho (status, prioridade, tags, responsáveis, criador, tempo rastreado × estimativa, datas, pontos, observadores e lista; prazo destacado quando atrasado) e três abas:
+
+- **Descrição**: texto, campos personalizados, checklists, subtarefas e galeria de anexos.
+- **Comentários**: os comentários do ClickUp.
+- **🔒 Notas locais**: suas anotações privadas.
+
+### Comentários
+
+![Comentários com thread, código, checklist e @menção](images/comentarios.png)
+
+- Cards por autor, agrupados por dia, com respostas em thread, imagens, busca e ordem invertível.
+- **Comente e responda** direto no ClickUp, com `**negrito**`, `_itálico_`, `` `código` ``, links e `@menção` com autocompletar.
+- Atalhos: `Ctrl+B`, `Ctrl+I`, `Ctrl+E` e `Ctrl+K`.
+
+### Notas locais
+
+![Notas locais da tarefa](images/notas.png)
+
+Anotações que ficam só na sua máquina: rascunhos, decisões técnicas, lembretes. Elas têm data, podem ser editadas e excluídas, e aparecem numa seção **Notas locais** do `task.md`, para a IA também levar em conta. Sobrevivem à atualização da tarefa.
+
+### Timer
+
+- **▶ Iniciar timer** em qualquer tarefa; a que está contando fica marcada com ● e ⏱.
+- O tempo corre na **barra de status** (clique para parar).
+- O ClickUp permite um timer por pessoa: iniciar numa tarefa para o que estiver rodando, inclusive um timer iniciado no ClickUp web.
+- Sincroniza com o ClickUp a cada minuto e quando a janela ganha foco.
 
 ### Imagens e anexos
 
 Por padrão nada é baixado: imagens, vídeos e arquivos ficam como link do ClickUp.
 
-- **Botão direito na tarefa → Baixar imagens**: baixa **só as imagens** para `<tarefa>/images/` (vídeos e outros arquivos **nunca** são baixados). A partir daí a descrição (no `task.md` e no painel) usa os arquivos locais, e clicar numa imagem a **amplia no VS Code**: no painel, com zoom (roda do mouse, arrastar, duplo clique, `Esc`); no preview do `task.md`, no visualizador de imagens.
-- **Sem imagens baixadas**, a descrição mostra as imagens pelo link e clicar **abre no navegador** (com `?view=open`, para exibir em vez de baixar).
-- As imagens baixadas ficam em `<pasta das tarefas>/<ID>/images/<id-do-anexo>_<nome>` (ex.: `~/Documentos/Vertti/ClickUp/tarefas/ID-49228/images/691e8152_image.png`). A barra da aba **Descrição** mostra a pasta e tem **Abrir pasta**.
-- **Botão direito numa imagem do painel**: **Copiar caminho da imagem** e **Abrir em aba do VS Code** (imagens baixadas), **Copiar link da imagem** e **Abrir no navegador** (sempre).
-- **Botão direito → Limpar imagens** apaga as imagens da tarefa na hora e a descrição volta aos links.
-- **Limpeza automática**: em todas as tarefas, cada imagem baixada é apagada **3 horas** depois do download (`clickupTasks.imageRetentionHours`; verificação a cada 15 min). O `task.md` e o painel voltam aos links sozinhos.
-- Na aba **Descrição** do painel há uma barra com o estado das imagens e os mesmos botões Baixar/Limpar.
+- **Botão direito → Baixar imagens** baixa só as imagens da tarefa (vídeos e outros arquivos nunca são baixados). A descrição passa a usar os arquivos locais, e clicar numa imagem a amplia no VS Code, com zoom.
+- **Botão direito numa imagem**: copiar caminho, abrir em aba, copiar link ou abrir no navegador.
+- **Limpar imagens** apaga na hora; e a **limpeza automática** apaga cada imagem 3 horas depois do download (configurável).
 
-## Configurações
+---
 
-| Chave | Padrão | Descrição |
+## 📁 Estrutura gerada
+
+```
+.clickup/tasks/
+├── .gitignore        # "*": as tarefas não entram no git do seu projeto
+└── ID-49228/
+    ├── task.md       # a tarefa legível, para você e para a IA
+    ├── task.json     # resposta bruta da API
+    ├── comments.json
+    ├── notes.json    # notas locais (se houver)
+    └── images/       # só se você usar "Baixar imagens"
+```
+
+![task.md gerado, pronto para referenciar na IA](images/task-md.png)
+
+---
+
+## ⚙️ Configurações
+
+| Configuração | Padrão | Descrição |
 | --- | --- | --- |
-| `clickupTasks.tasksFolder` | `.clickup/tasks` | Relativo ao workspace, absoluto ou `~/...`. Com caminho fixo, todas as janelas compartilham as tarefas e a lista se atualiza sozinha em todas |
-| `clickupTasks.teamId` | _(auto)_ | Workspace do ClickUp, necessário para IDs customizados |
-| `clickupTasks.numericIdPrefixes` | `["ID"]` | Prefixos tentados quando você digita só o número |
-| `clickupTasks.groupByStatus` | `true` | Agrupar a lista por status |
-| `clickupTasks.imageRetentionHours` | `3` | Horas até apagar sozinhas as imagens baixadas (todas as tarefas) |
+| `clickupTasks.tasksFolder` | `.clickup/tasks` | Onde salvar as tarefas: relativo ao workspace, absoluto ou `~/...`. Com um caminho fixo, todas as janelas compartilham as mesmas tarefas. |
+| `clickupTasks.teamId` | _(automático)_ | ID do workspace do ClickUp, usado para IDs customizados. |
+| `clickupTasks.numericIdPrefixes` | `["ID"]` | Prefixos tentados quando você digita só o número. Ex.: `["ID", "DEV"]`. |
+| `clickupTasks.groupByStatus` | `true` | Agrupar a lista por status. |
+| `clickupTasks.imageRetentionHours` | `3` | Horas até as imagens baixadas serem apagadas. |
 
-## Desenvolvimento
+---
+
+## 🔐 Privacidade
+
+- O token fica no **keychain do sistema** (Secret Storage do VS Code), nunca em arquivo.
+- A extensão só se comunica com a **API oficial do ClickUp** (`api.clickup.com`). Nenhum dado é enviado a terceiros.
+- As tarefas ficam em arquivos locais, e a pasta já vem com `.gitignore` para não ir parar no seu repositório por engano.
+- As notas locais nunca saem da sua máquina.
+
+---
+
+## 🛠️ Desenvolvimento
 
 ```bash
 npm install
-npm run compile      # type-check + build em dist/
-npm run watch        # rebuild contínuo
-npm run package      # gera clickup-tasks-<versão>.vsix
-code --install-extension clickup-tasks-0.1.0.vsix
+npm run watch      # rebuild contínuo
+npm run compile    # type-check + build em dist/
+npm run package    # gera o .vsix
 ```
 
-Para depurar, abra esta pasta no VS Code e aperte **F5**.
+Para depurar, abra a pasta no VS Code e aperte **F5**.
+
+Encontrou um problema ou tem uma ideia? Abra uma [issue](https://github.com/renanvnunes/clickup-vscode/issues).
+
+---
+
+<sub>Licença [MIT](LICENSE). Extensão não oficial, sem vínculo com a ClickUp. ClickUp é marca registrada de seus respectivos donos.</sub>

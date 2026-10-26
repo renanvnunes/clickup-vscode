@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+- README reescrito, com prints dos recursos.
+
 ## 0.6.0
 
 - Primeira versão publicada no Marketplace.

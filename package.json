@@ -2,7 +2,7 @@
   "name": "clickup-tasks",
   "displayName": "ClickUp Tasks",
   "description": "Importa tarefas do ClickUp (dados, comentários e anexos) para uma pasta local em Markdown, prontas para referenciar em qualquer IA.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publisher": "renan-dev",
   "icon": "media/icon.png",
   "galleryBanner": {
